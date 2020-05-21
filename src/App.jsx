@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
+import axios from 'axios';
 import './App.scss';
 
 const products = [{
@@ -28,8 +29,19 @@ const columns = [{
 }];
 
 const App = () => {
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:3000')
+        .then(result => {
+          setData(result)
+        })
+  }, [])
+
   return (
     <div className="App">
+      {console.log(data)}
       <BootstrapTable bootstrap4 keyField='id' data={ products } columns={ columns } />
     </div>
   );
